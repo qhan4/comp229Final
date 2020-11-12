@@ -7,7 +7,24 @@
     <% include partials/menu %>
 
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
+    <div class="container-fluid bg-3 text-center">
+      <h3>Vacuum Cleaner Survey</h3><br>
+      <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-8">
+          <form action="/vacuum/new" method="POST" >
+        <input class="form-control form-group" type="text" placeholder="Why did you purchase the vaccum cleaner you currently own?" name="why" required/>
+        <input class="form-control form-group" type="text" placeholder="What is the indication that a vaccum cleaner is performing well for you?" name="performance" required/>
+        <input class="form-control form-group" type="text" placeholder="Does the vaccum cleaner you own has at least one HEPA filter?" name="hepa" required/>
+        <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Submit</button>
+      </form>
+        </div>
+      </div>
+    </div>
+
+
   </body>
   <% include partials/script %>
 </html>

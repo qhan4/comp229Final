@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var mongoose = require('mongoose');
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -37,5 +40,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//MongoDB config
+mongoose.Promise = global.Promise;
+
+mongoose.connect("mongodb+srv://comp229:comp229@cluster0.oqxxs.mongodb.net/COMP229-Final?retryWrites=true&w=majority")
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
 
 module.exports = app;
