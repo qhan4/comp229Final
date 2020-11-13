@@ -4,6 +4,30 @@ var Vacuum = require("../models/Vacuums");
 var vacuumController = {};
 
 
+vacuumController.index = function(req, res, next) {
+
+  // if(!req.user)
+  //   {
+  //     res.redirect('/');
+  //   } else {
+
+  mongoose.model('Vacuum').find({}).sort({ name: 1 }).exec(function (err, vacuums) {
+    if (err) {
+      return console.error(err);
+    } else {
+      res.format({
+        html: function(){
+          res.render('./vacuum/index', { title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum', vacuums: vacuums});
+        },
+        json: function(){
+          res.json(contacts);
+        }
+      });
+    }
+  });
+//}
+};
+
 vacuumController.create = function(req, res) {
   var why = req.body.why;
   var performance = req.body.performance;
@@ -22,6 +46,45 @@ vacuumController.create = function(req, res) {
   });
 };
 
+
+vacuumController.edit = function(req, res) {
+
+  mongoose.model('Vacuum').findById(req.params.id, function (err, contact){
+    if (err) {
+      return console.error(err);
+    } else {
+      res.render('./vacuum/edit',{ title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum'});
+    }
+  });
+
+
+};
+
+vacuumController.update = function(req, res) {
+  var why = req.body.why;
+  var performance = req.body.performance;
+  var hepa = req.body.hepa;
+
+  mongoose.model('Vacuum').findByIdAndUpdate(req.params.id, { $set: {why: why, performance: performance, hepa: hepa}}, function(err, contact) {
+    if (err) {
+      return console.error(err);
+    } else {
+      //res.send("Successfully Updated Contact");
+      res.redirect('/vacuum/index');
+    }
+  });
+};
+
+vacuumController.delete = function(req, res) {
+  mongoose.model('Vacuum').remove({_id: req.params.id}, function(err, contact) {
+    if (err) {
+      return console.error(err);
+    } else {
+      //res.send("Successfully Deleted Contact");
+      res.redirect('/vacuum/index');
+    }
+  });
+};
 
 
 module.exports = vacuumController;

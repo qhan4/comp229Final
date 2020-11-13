@@ -38,9 +38,7 @@ a {
     color: #960000 !important;;
   }
 
-
-
-  .rotateimg180 {
+.rotateimg180 {
     -webkit-transform:rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);

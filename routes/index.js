@@ -13,3 +13,7 @@ module.exports = router;
 
 
 router.post('/vacuum/new', vacuum.create);
+router.get('/vacuum/index', vacuum.index);
+router.get('/vacuum/:id/edit',  vacuum.edit);
+router.post('/vacuum/:id/edit',  vacuum.update);
+router.post('/vacuum/:id/delete',  vacuum.delete);
