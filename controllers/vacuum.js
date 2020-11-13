@@ -17,7 +17,7 @@ vacuumController.index = function(req, res, next) {
     } else {
       res.format({
         html: function(){
-          res.render('./vacuum/index', { title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum', vacuums: vacuums});
+          res.render('./vacuum/index', { title: 'All Vacuum', page:'All Vacuum', menuId:'Vacuum', vacuums: vacuums});
         },
         json: function(){
           res.json(contacts);
@@ -49,11 +49,11 @@ vacuumController.create = function(req, res) {
 
 vacuumController.edit = function(req, res) {
 
-  mongoose.model('Vacuum').findById(req.params.id, function (err, contact){
+  mongoose.model('Vacuum').findById(req.params.id, function (err, vacuum){
     if (err) {
       return console.error(err);
     } else {
-      res.render('./vacuum/edit',{ title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum'});
+      res.render('./vacuum/edit',{ title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum', vacuum: vacuum});
     }
   });
 

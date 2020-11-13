@@ -12,17 +12,17 @@
     <h3><%= title %></h3><br>
     <div class="row">
       <div class="col-sm-4">
-        <form action="/buzContact/<%= contact._id%>/delete" id="sendMessageButton" method="post">
+        <form action="/vacuum/<%= vacuum._id%>/delete" id="sendMessageButton" method="post">
         <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
         </form>
         <br>
-        <a href="/buzContact/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+        <a href="/vacuum/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
       </div>
       <div class="col-sm-8">
-        <form action="/buzContact/<%= contact._id%>/edit" method="POST" >
-      <input class="form-control form-group" type="text" placeholder="Contact Name" name="name" value="<%= contact.name%>" required/>
-      <input class="form-control form-group" type="text" placeholder="Contact Number" name="number" value="<%= contact.number%>" required/>
-      <input class="form-control form-group" type="email" placeholder="Contact Email Address" name="email" value="<%= contact.email%>" required/>
+        <form action="/vacuum/<%= vacuum._id%>/edit" method="POST" >
+      <input class="form-control form-group" type="text" placeholder="Why" name="why" value="<%= vacuum.why%>" required/>
+      <input class="form-control form-group" type="text" placeholder="performance" name="performance" value="<%= vacuum.performance%>" required/>
+      <input class="form-control form-group" type="text" placeholder="HEPA" name="hepa" value="<%= vacuum.hepa%>" required/>
       <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Update</button>
     </form>
 
