@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body>
+  <% include ../partials/menu %>
+
+  <div class="container-fluid bg-3 text-center">
+    <h3><%= title %></h3><br>
+    <div class="row">
+      <div class="col-sm-4">
+
+          <div class="form-group text-center">
+                  <div id="success"></div>
+                  <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Survey Index</a>
+          </div>
+
+
+      </div>
+      <div class="col-sm-8">
+        <form action="/survey/new" method="POST" >
+      <input class="form-control form-group" type="text" placeholder="Survey Title" name="title" required/>
+      <input class="form-control form-group" type="text" placeholder="Question 1" name="q1" required/>
+      <input class="form-control form-group" type="text" placeholder="Question 2" name="q2" required/>
+      <input class="form-control form-group" type="text" placeholder="Question 3" name="q3" required/>
+      <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Submit</button>
+    </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+<% include ../partials/script %>
+
+</html>

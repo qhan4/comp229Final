@@ -23,7 +23,7 @@ userController.doRegister = function(req, res) {
     }
 
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/buzContact/index');
+      res.redirect('/');
     });
   });
 };
@@ -51,7 +51,7 @@ userController.doLogin = function(req, res, next)  {
         return next(err);
       }
 
-      return res.redirect('/buzContact/index');
+      return res.redirect('/');
     });
 
   })(req, res, next);

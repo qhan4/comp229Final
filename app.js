@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var mongoose = require('mongoose');
 
@@ -25,6 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*  PASSPORT SETUP  */
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -55,21 +61,37 @@ mongoose.connect("mongodb+srv://comp229:comp229@cluster0.oqxxs.mongodb.net/COMP2
 
 var User = require('./models/Users');
 //passport.use(new LocalStrategy(User.authenticate()));
-passport.use(new LocalStrategy({
-        usernameField: 'username',
-        passwordField: 'password'
-    },
-    function (email, password, cb) {
-        //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
-        return User.findOne({email, password})
-           .then(user => {
-               if (!user) {
-                   return cb(null, false, {message: 'Incorrect email or password.'});
-               }
-               return cb(null, user, {message: 'Logged In Successfully'});
-          })
-          .catch(err => cb(err));
-    }
+// passport.use(new LocalStrategy({
+//         usernameField: 'username',
+//         passwordField: 'password'
+//     },
+//     function (username, password, cb) {
+//         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+//         return User.findOne({username, password})
+//            .then(user => {
+//                if (!user) {
+//                    return cb(null, false, {message: 'Incorrect username or password.'});
+//                }
+//                return cb(null, user, {message: 'Logged In Successfully'});
+//           })
+//           .catch(err => cb(err));
+//     }
+// ));
+
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
 ));
 
 /* PASSPORT LOCAL AUTHENTICATION */

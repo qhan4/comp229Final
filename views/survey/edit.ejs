@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body>
+  <% include ../partials/menu %>
+
+  <div class="container-fluid bg-3 text-center">
+    <h3><%= title %></h3><br>
+    <div class="row">
+      <div class="col-sm-4">
+        <form action="/survey/<%= survey._id%>/delete" id="sendMessageButton" method="post">
+          <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
+        </form>
+        <br>
+        <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+      </div>
+      <div class="col-sm-8">
+        <form action="/survey/<%= survey._id%>/edit" method="POST">
+          <input class="form-control form-group" type="text" placeholder="Title" name="title" value="<%= survey.title%>" required />
+          <input class="form-control form-group" type="text" placeholder="Question 1" name="q1" value="<%= survey.q1%>" required />
+          <input class="form-control form-group" type="text" placeholder="Question 2" name="q2" value="<%= survey.q2%>" required />
+          <input class="form-control form-group" type="text" placeholder="Question 3" name="q3" value="<%= survey.q3%>" required />
+          <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Update</button>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+</body>
+<% include ../partials/script %>
+
+</html>
