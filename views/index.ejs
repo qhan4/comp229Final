@@ -17,10 +17,12 @@
 
         </div>
         <div class="col-sm-8">
-          <form action="/survey/new" method="POST" >
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q1%>" name="q1"  required/>
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q2%>" name="q2"  required/>
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q3%>" name="q3"  required/>
+          <form action="/answer/new" method="POST" >
+        <input class="form-control form-group" type="hidden" placeholder="<%= survey._id%>" name="sid" value="<%= survey._id%>" required/>
+
+        <input class="form-control form-group" type="text" placeholder="<%= survey.q1%>" name="a1"  required/>
+        <input class="form-control form-group" type="text" placeholder="<%= survey.q2%>" name="a2"  required/>
+        <input class="form-control form-group" type="text" placeholder="<%= survey.q3%>" name="a3"  required/>
         <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Submit</button>
       </form>
         </div>

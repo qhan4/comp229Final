@@ -9,50 +9,64 @@
   <% include ../partials/menu %>
 
   <div class="container-fluid bg-3 text-center">
-    <h3><%= title %></h3><br>
+    <h3><%= title%></h3><br>
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group text-center">
-                <div id="success"></div>
-                <a href="/" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">New Vacuum</a>
+          <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">All Surveys</a>
+
         </div>
-        <div class="form-group text-center">
-                <div id="success"></div>
-                <a href="/logout" class="btn btn-warning btn-rounded btn-xl text-uppercase" type="submit">Logout</a>
+        <div>
+          <h5> Questions: </h5>
+          <ul class="list-group text-left">
+            <li class="list-group-item"><%= survey.q1%></li>
+            <li class="list-group-item"><%= survey.q2%></li>
+            <li class="list-group-item"><%= survey.q3%></li>
+          </ul>
         </div>
+
+
+
       </div>
-      <div class="col-sm-8">
-        <table class="table table-hover text-center">
-          <thead>
-            <tr>
-              <th>Why</th>
-              <th>Performance</th>
-              <th>Hepa</th>
-              <th>&nbsp;</th>
-              <th>&nbsp;</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            <% for(var i = 0; i < vacuums.length; i++) {%>
+        <div class="col-sm-8">
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <th>Answer 1</th>
+                <th>Answer 2</th>
+                <th>Answer 3</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
 
-            <tr>
-              <td><%= vacuums[i].why %></td>
-              <td><%= vacuums[i].performance %></td>
-              <td><%= vacuums[i].hepa %></td>
-              <td><a href="/vacuum/<%= vacuums[i]._id%>/edit" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Edit</a></td>
-              <td>
-                <form action="/vacuum/<%= vacuums[i]._id%>/delete" id="sendMessageButton" method="post">
-                <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
-                </form></td>
-            </tr>
-            <% } %>
+            <tbody>
+              <% for(var i = 0; i < answers.length; i++) {%>
 
-          </tbody>
-        </table>
+              <tr>
+                <td><%= answers[i].a1 %></td>
+                <td><%= answers[i].a2 %></td>
+                <td><%= answers[i].a3 %></td>
+
+                </td>
+
+                <td><a href="/answer/<%= answers[i]._id%>/edit" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Edit</a></td>
+                <td>
+                </td>
+                <td>
+                  <form action="/answer/<%= answers[i]._id%>/delete" id="sendMessageButton" method="post">
+                    <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              <% } %>
+
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
 </body>
 <% include ../partials/script %>

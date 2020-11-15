@@ -12,7 +12,7 @@ surveyController.index = function(req, res, next) {
   //     res.redirect('/');
   //   } else {
 
-  mongoose.model('Survey').find({}).sort({ name: 1 }).exec(function (err, surveys) {
+  mongoose.model('Survey').find({}).sort({ title: 1 }).exec(function (err, surveys) {
     if (err) {
       return console.error(err);
     } else {

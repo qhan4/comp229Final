@@ -36,7 +36,7 @@
             <% for(var i = 0; i < surveys.length; i++) {%>
 
             <tr>
-              <td><%= surveys[i].title %></td>
+              <td><a href="/survey/<%= surveys[i]._id%>/edit" id="sendMessageButton" class="text-uppercase" type="submit"><%= surveys[i].title %></a></td>
               <td><%= surveys[i].q1 %></td>
               <td><%= surveys[i].q2 %></td>
               <td><%= surveys[i].q3 %></td>
@@ -47,8 +47,9 @@
             </strong>
               </td>
 
-              <td><a href="/survey/<%= surveys[i]._id%>/edit" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Edit</a></td>
-              <td>        <a href="/survey/<%= surveys[i]._id%>/active" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Active Survey</a>
+              <td><a href="/survey/<%= surveys[i]._id%>/active" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Active Survey</a></td>
+              <td>
+                <a href="/answer/<%= surveys[i]._id%>/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Survey Answers</a>
               </td>
               <td>
                 <form action="/survey/<%= surveys[i]._id%>/delete" id="sendMessageButton" method="post">

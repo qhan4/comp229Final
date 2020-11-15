@@ -1,43 +1,57 @@
 var mongoose = require("mongoose");
-var Vacuum = require("../models/Vacuums");
+var Answer = require("../models/Answers");
+var Survey = require("../models/Surveys");
 
-var vacuumController = {};
+
+var answerController = {};
 
 
-vacuumController.index = function(req, res, next) {
+answerController.index = function(req, res, next) {
 
   // if(!req.user)
   //   {
   //     res.redirect('/');
   //   } else {
 
-  mongoose.model('Vacuum').find({}).sort({ name: 1 }).exec(function (err, vacuums) {
+  mongoose.model('Answer').find({
+    sid: req.params.id
+  }).exec(function(err, answers) {
     if (err) {
       return console.error(err);
     } else {
-      res.format({
-        html: function(){
-          res.render('./vacuum/index', { title: 'All Vacuum', page:'All Vacuum', menuId:'Vacuum', vacuums: vacuums});
-        },
-        json: function(){
-          res.json(contacts);
+      mongoose.model('Survey').findById(req.params.id, function(err, survey) {
+        if (err) {
+          return console.error(err);
+        } else {
+          res.format({
+            html: function() {
+              res.render('./answer/index', {
+                title: 'All Answers for ' + survey.title,
+                page: 'All Answers for ' + survey.title,
+                menuId: 'Answer',
+                answers: answers,
+                survey: survey
+              });
+            }
+          });
         }
       });
     }
   });
-//}
 };
 
-vacuumController.create = function(req, res) {
-  var why = req.body.why;
-  var performance = req.body.performance;
-  var hepa = req.body.hepa;
+answerController.create = function(req, res) {
+  var a1 = req.body.a1;
+  var a2 = req.body.a2;
+  var a3 = req.body.a3;
+  var sid = req.body.sid;
 
-  mongoose.model('Vacuum').create({
-    why : why,
-    performance : performance,
-    hepa : hepa
-  }, function (err, contacts) {
+  mongoose.model('Answer').create({
+    a1: a1,
+    a2: a2,
+    a3: a3,
+    sid: sid
+  }, function(err, contacts) {
     if (err) {
       return console.error(err);
     } else {
@@ -47,44 +61,68 @@ vacuumController.create = function(req, res) {
 };
 
 
-vacuumController.edit = function(req, res) {
+answerController.edit = function(req, res) {
 
-  mongoose.model('Vacuum').findById(req.params.id, function (err, vacuum){
+  mongoose.model('Answer').findById(req.params.id, function(err, answer) {
     if (err) {
       return console.error(err);
     } else {
-      res.render('./vacuum/edit',{ title: 'Edit Vacuum', page:'Edit Vacuum', menuId:'Vacuum', vacuum: vacuum});
+      mongoose.model('Survey').findById(answer.sid, function(err, survey) {
+        if (err) {
+          return console.error(err);
+        } else {
+          res.format({
+            html: function() {
+              res.render('./answer/edit', {
+                title: 'Edit Answer',
+                page: 'Edit Answer',
+                menuId: 'Answer',
+                answer: answer,
+                survey: survey
+              });
+            }
+          });
+        }
+      });
     }
   });
 
 
 };
 
-vacuumController.update = function(req, res) {
-  var why = req.body.why;
-  var performance = req.body.performance;
-  var hepa = req.body.hepa;
+answerController.update = function(req, res) {
+  var a1 = req.body.a1;
+  var a2 = req.body.a2;
+  var a3 = req.body.a3;
 
-  mongoose.model('Vacuum').findByIdAndUpdate(req.params.id, { $set: {why: why, performance: performance, hepa: hepa}}, function(err, contact) {
+  mongoose.model('Answer').findByIdAndUpdate(req.params.id, {
+    $set: {
+      a1: a1,
+      a2: a2,
+      a3: a3
+    }
+  }, function(err, answer) {
     if (err) {
       return console.error(err);
     } else {
       //res.send("Successfully Updated Contact");
-      res.redirect('/vacuum/index');
+      res.redirect('/answer/' + answer.sid + '/index');
     }
   });
 };
 
-vacuumController.delete = function(req, res) {
-  mongoose.model('Vacuum').remove({_id: req.params.id}, function(err, contact) {
+answerController.delete = function(req, res) {
+  mongoose.model('Answer').findOneAndDelete({
+    _id: req.params.id
+  }, function(err, answer) {
     if (err) {
       return console.error(err);
     } else {
       //res.send("Successfully Deleted Contact");
-      res.redirect('/vacuum/index');
+      res.redirect('/answer/' + answer.sid + '/index');
     }
   });
 };
 
 
-module.exports = vacuumController;
+module.exports = answerController;

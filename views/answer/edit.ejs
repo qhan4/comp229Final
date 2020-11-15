@@ -12,19 +12,29 @@
     <h3><%= title %></h3><br>
     <div class="row">
       <div class="col-sm-4">
-        <form action="/vacuum/<%= vacuum._id%>/delete" id="sendMessageButton" method="post">
-        <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
+        <form action="/answer/<%= answer._id%>/delete" id="sendMessageButton" method="post">
+          <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
         </form>
         <br>
-        <a href="/vacuum/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+
+        <a href="/answer/<%= survey._id%>/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+        <br>
+        <div>
+          <h5> Questions: </h5>
+          <ul class="list-group text-left">
+            <li class="list-group-item"><%= survey.q1%></li>
+            <li class="list-group-item"><%= survey.q2%></li>
+            <li class="list-group-item"><%= survey.q3%></li>
+          </ul>
+        </div>
       </div>
       <div class="col-sm-8">
-        <form action="/vacuum/<%= vacuum._id%>/edit" method="POST" >
-      <input class="form-control form-group" type="text" placeholder="Why" name="why" value="<%= vacuum.why%>" required/>
-      <input class="form-control form-group" type="text" placeholder="performance" name="performance" value="<%= vacuum.performance%>" required/>
-      <input class="form-control form-group" type="text" placeholder="HEPA" name="hepa" value="<%= vacuum.hepa%>" required/>
-      <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Update</button>
-    </form>
+        <form action="/answer/<%= answer._id%>/edit" method="POST">
+          <input class="form-control form-group" type="text" placeholder="Question 1" name="a1" value="<%= answer.a1%>" required />
+          <input class="form-control form-group" type="text" placeholder="Question 2" name="a2" value="<%= answer.a2%>" required />
+          <input class="form-control form-group" type="text" placeholder="Question 3" name="a3" value="<%= answer.a3%>" required />
+          <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Update</button>
+        </form>
 
 
       </div>

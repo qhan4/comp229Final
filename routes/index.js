@@ -8,6 +8,7 @@ var Survey = require("../models/Surveys");
 
 var auth = require("../controllers/AuthController.js");
 var survey = require("../controllers/Survey.js");
+var answer = require("../controllers/Answer.js");
 var authenticated;
 
 /* GET home page. */
@@ -39,6 +40,12 @@ router.get('/survey/:id/edit',  survey.edit);
 router.post('/survey/:id/edit',  survey.update);
 router.post('/survey/:id/delete',  survey.delete);
 router.get('/survey/:id/active',  survey.active);
+
+router.post('/answer/new', answer.create);
+router.get('/answer/:id/index', answer.index);
+router.get('/answer/:id/edit',  answer.edit);
+router.post('/answer/:id/edit',  answer.update);
+router.post('/answer/:id/delete',  answer.delete);
 
 
 // route to register page
