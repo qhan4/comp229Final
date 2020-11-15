@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const connectEnsureLogin = require('connect-ensure-login');
 
+var auth = require("../controllers/AuthController.js");
 var vacuum = require("../controllers/vacuum.js");
 
 

@@ -6,6 +6,10 @@ var logger = require('morgan');
 
 var mongoose = require('mongoose');
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var auth = require("./controllers/AuthController.js");
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -47,5 +51,31 @@ mongoose.Promise = global.Promise;
 mongoose.connect("mongodb+srv://comp229:comp229@cluster0.oqxxs.mongodb.net/COMP229-Final?retryWrites=true&w=majority")
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
+
+
+var User = require('./models/Users');
+//passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy({
+        usernameField: 'username',
+        passwordField: 'password'
+    },
+    function (email, password, cb) {
+        //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+        return User.findOne({email, password})
+           .then(user => {
+               if (!user) {
+                   return cb(null, false, {message: 'Incorrect email or password.'});
+               }
+               return cb(null, user, {message: 'Logged In Successfully'});
+          })
+          .catch(err => cb(err));
+    }
+));
+
+/* PASSPORT LOCAL AUTHENTICATION */
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 module.exports = app;
