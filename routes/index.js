@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 const connectEnsureLogin = require('connect-ensure-login');
 
+
+var mongoose = require("mongoose");
+var Survey = require("../models/Surveys");
+
 var auth = require("../controllers/AuthController.js");
 var survey = require("../controllers/Survey.js");
 var authenticated;
@@ -15,7 +19,15 @@ router.get('/', function(req, res, next) {
     authenticated = "0";
   }
   console.log(req.user);
-  res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', authenticated: authenticated });
+  //res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', authenticated: authenticated });
+
+  mongoose.model('Survey').findOne({active: true}, function (err, survey){
+    if (err) {
+      return console.error(err);
+    } else {
+      res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', survey: survey });
+    }
+  });
 });
 
 
@@ -26,6 +38,7 @@ router.get('/survey/index', survey.index);
 router.get('/survey/:id/edit',  survey.edit);
 router.post('/survey/:id/edit',  survey.update);
 router.post('/survey/:id/delete',  survey.delete);
+router.get('/survey/:id/active',  survey.active);
 
 
 // route to register page

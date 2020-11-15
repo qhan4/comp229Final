@@ -3,6 +3,7 @@ var Survey = require("../models/Surveys");
 
 var surveyController = {};
 
+//mongoose.set('useFindAndModify', false);
 
 surveyController.index = function(req, res, next) {
 
@@ -94,6 +95,39 @@ surveyController.delete = function(req, res) {
     }
   });
 };
+
+surveyController.active = function(req, res) {
+
+  mongoose.model('Survey').updateMany({active: true}, {
+      $set: {
+        active: false
+      }},
+      function(err, contact) {
+        if (err) {
+          return console.error(err);
+        } else {
+          mongoose.model('Survey').findByIdAndUpdate(req.params.id, { $set: {active: true}}, function(err, contact) {
+            if (err) {
+              return console.error(err);
+            } else {
+              //res.send("Successfully Updated Contact");
+              res.redirect('/survey/index');
+            }
+          });
+        }
+      });
+
+
+  // mongoose.model('Survey').findByIdAndUpdate(req.params.id, { $set: {active: true}}, function(err, contact) {
+  //   if (err) {
+  //     return console.error(err);
+  //   } else {
+  //     //res.send("Successfully Updated Contact");
+  //     res.redirect('/survey/index');
+  //   }
+  // });
+};
+
 
 
 module.exports = surveyController;

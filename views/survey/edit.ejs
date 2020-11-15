@@ -16,7 +16,11 @@
           <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
         </form>
         <br>
+
         <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+
+        <a href="/survey/<%= survey._id%>/active" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Active Survey</a>
+        <br>
       </div>
       <div class="col-sm-8">
         <form action="/survey/<%= survey._id%>/edit" method="POST">

@@ -26,6 +26,7 @@
               <th>Question 1</th>
               <th>Question 2</th>
               <th>Question 3</th>
+              <th>Active Survey</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
@@ -39,7 +40,16 @@
               <td><%= surveys[i].q1 %></td>
               <td><%= surveys[i].q2 %></td>
               <td><%= surveys[i].q3 %></td>
+              <td><strong>
+
+              <%= surveys[i].active ? surveys[i].active : '' %>
+
+            </strong>
+              </td>
+
               <td><a href="/survey/<%= surveys[i]._id%>/edit" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Edit</a></td>
+              <td>        <a href="/survey/<%= surveys[i]._id%>/active" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Active Survey</a>
+              </td>
               <td>
                 <form action="/survey/<%= surveys[i]._id%>/delete" id="sendMessageButton" method="post">
                 <button type="submit" class="btn btn-warning btn-rounded btn-xl text-uppercase">Delete</button>
