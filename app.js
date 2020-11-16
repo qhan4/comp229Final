@@ -3,17 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var session = require('express-session');
+var auth = require("./controllers/AuthController.js");
+//var session = require('express-session');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var mongoose = require('mongoose');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var auth = require("./controllers/AuthController.js");
-
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -26,6 +25,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//passport and sessions
+const bodyParser = require('body-parser');
+const expressSession = require('express-session')({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSession);
 
 /*  PASSPORT SETUP  */
 
@@ -65,9 +76,9 @@ var User = require('./models/Users');
 //         usernameField: 'username',
 //         passwordField: 'password'
 //     },
-//     function (username, password, cb) {
+//     function (email, password, cb) {
 //         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
-//         return User.findOne({username, password})
+//         return User.findOne({email, password})
 //            .then(user => {
 //                if (!user) {
 //                    return cb(null, false, {message: 'Incorrect username or password.'});

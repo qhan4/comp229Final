@@ -4,7 +4,12 @@
   <% include partials/head %>
 </head>
   <body>
-    <% include partials/menu %>
+    <% if (authenticated == 0) {%>
+      <% include partials/menu %>
+    <% } else {%>
+      <% include partials/menu_authenticated %>
+    <%}%>
+
 
     <h1><%= title %></h1>
 

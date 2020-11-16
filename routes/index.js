@@ -13,39 +13,40 @@ var authenticated;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(Boolean(connectEnsureLogin.ensureLoggedIn()));
-  if(req.isAuthenticated === true){
-    authenticated = "1";
-  } else if (req.isAuthenticated === false) {
+  //console.log(Boolean(connectEnsureLogin.ensureLoggedIn()));
+  if(req.user == undefined ){
     authenticated = "0";
+  } else  {
+    authenticated = "1";
   }
   console.log(req.user);
+  console.log(authenticated);
   //res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', authenticated: authenticated });
 
   mongoose.model('Survey').findOne({active: true}, function (err, survey){
     if (err) {
       return console.error(err);
     } else {
-      res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', survey: survey });
+      res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', survey: survey, authenticated: authenticated });
     }
   });
 });
 
 
 
-router.get('/survey/new', survey.new);
-router.post('/survey/new', survey.create);
-router.get('/survey/index', survey.index);
-router.get('/survey/:id/edit',  survey.edit);
-router.post('/survey/:id/edit',  survey.update);
-router.post('/survey/:id/delete',  survey.delete);
-router.get('/survey/:id/active',  survey.active);
+router.get('/survey/new', connectEnsureLogin.ensureLoggedIn(), survey.new);
+router.post('/survey/new', connectEnsureLogin.ensureLoggedIn(), survey.create);
+router.get('/survey/index', connectEnsureLogin.ensureLoggedIn(), survey.index);
+router.get('/survey/:id/edit', connectEnsureLogin.ensureLoggedIn(), survey.edit);
+router.post('/survey/:id/edit', connectEnsureLogin.ensureLoggedIn(), survey.update);
+router.post('/survey/:id/delete', connectEnsureLogin.ensureLoggedIn(), survey.delete);
+router.get('/survey/:id/active',  connectEnsureLogin.ensureLoggedIn(), survey.active);
 
 router.post('/answer/new', answer.create);
-router.get('/answer/:id/index', answer.index);
-router.get('/answer/:id/edit',  answer.edit);
-router.post('/answer/:id/edit',  answer.update);
-router.post('/answer/:id/delete',  answer.delete);
+router.get('/answer/:id/index', connectEnsureLogin.ensureLoggedIn(), answer.index);
+router.get('/answer/:id/edit',  connectEnsureLogin.ensureLoggedIn(), answer.edit);
+router.post('/answer/:id/edit',  connectEnsureLogin.ensureLoggedIn(), answer.update);
+router.post('/answer/:id/delete',  connectEnsureLogin.ensureLoggedIn(), answer.delete);
 
 
 // route to register page
