@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <% include partials/head %>
 </head>
-  <body>
-    <% if (authenticated == 0) {%>
-      <% include partials/menu %>
-    <% } else {%>
-      <% include partials/menu_authenticated %>
-    <%}%>
+
+<body>
+  <% if (authenticated == 0) {%>
+  <% include partials/menu %>
+  <% } else {%>
+  <% include partials/menu_authenticated %>
+  <%}%>
 
 
     <h1><%= title %></h1>
 
-    <div class="container-fluid bg-3 text-center">
-      <h3><%= survey.title%></h3><br>
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">All Surveys</a>
+  <div class="container-fluid bg-3 text-center">
+    <% if (survey == null) {%>
+    <h3>No Current Active Survey</h3>
+    <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">All Surveys</a>
+    <% } else {%>
+
+    <h3><%= survey.title%></h3><br>
+    <div class="row">
+      <div class="col-sm-4">
+        <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">All Surveys</a>
 
 
-        </div>
-        <div class="col-sm-8">
-          <form action="/answer/new" method="POST" >
-        <input class="form-control form-group" type="hidden" placeholder="<%= survey._id%>" name="sid" value="<%= survey._id%>" required/>
-
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q1%>" name="a1"  required/>
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q2%>" name="a2"  required/>
-        <input class="form-control form-group" type="text" placeholder="<%= survey.q3%>" name="a3"  required/>
-        <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Submit</button>
-      </form>
-        </div>
       </div>
+      <div class="col-sm-8">
+        <form action="/answer/new" method="POST">
+          <input class="form-control form-group" type="hidden" placeholder="<%= survey._id%>" name="sid" value="<%= survey._id%>" required />
+
+          <input class="form-control form-group" type="text" placeholder="<%= survey.q1%>" name="a1" required />
+          <input class="form-control form-group" type="text" placeholder="<%= survey.q2%>" name="a2" required />
+          <input class="form-control form-group" type="text" placeholder="<%= survey.q3%>" name="a3" required />
+          <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <%}%>
+
     </div>
 
 
   </body>
   <% include partials/script %>
+
 </html>
