@@ -86,12 +86,22 @@ surveyController.update = function(req, res) {
 };
 
 surveyController.delete = function(req, res) {
-  mongoose.model('Survey').remove({_id: req.params.id}, function(err, contact) {
+  mongoose.model('Survey').remove({
+    _id: req.params.id
+  }, function(err, contact) {
     if (err) {
       return console.error(err);
     } else {
-      //res.send("Successfully Deleted Contact");
-      res.redirect('/survey/index');
+
+      mongoose.model('Answer').remove({
+        sid: req.params.id
+      }, function(err, contact) {
+        if (err) {
+          return console.error(err);
+        } else {
+          res.redirect('/survey/index');
+        }
+      });
     }
   });
 };
