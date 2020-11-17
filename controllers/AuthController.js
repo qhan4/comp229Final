@@ -57,6 +57,36 @@ userController.doLogin = function(req, res, next)  {
   })(req, res, next);
 };
 
+
+userController.edit = function(req, res) {
+
+  mongoose.model('User').findById(req.user._id, function (err, profile){
+    if (err) {
+      return console.error(err);
+    } else {
+      res.render('edit',{ title: 'Edit Profile', page:'Edit Profile', menuId:'Profile', profile: profile});
+    }
+  });
+
+
+};
+
+userController.update = function(req, res) {
+  var email = req.body.email;
+
+  mongoose.model('User').findByIdAndUpdate(req.params.id, { $set: {email: email}}, function(err, contact) {
+    if (err) {
+      return console.error(err);
+    } else {
+      //res.send("Successfully Updated Contact");
+      res.redirect('edit');
+    }
+  });
+};
+
+
+
+
 // logout
 userController.logout = function(req, res) {
   req.logout();

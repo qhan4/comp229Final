@@ -21,13 +21,12 @@ router.get('/', function(req, res, next) {
   }
   console.log(req.user);
   console.log(authenticated);
-  //res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', authenticated: authenticated });
 
   mongoose.model('Survey').findOne({active: true}, function (err, survey){
     if (err) {
       return console.error(err);
     } else {
-      res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', survey: survey, authenticated: authenticated });
+      res.render('index', { title: 'Survey Site FA229', page:'Home', menuId:'home', survey: survey, authenticated: authenticated, user: req.user });
     }
   });
 });
@@ -60,6 +59,10 @@ router.get('/login', auth.login);
 
 // route for login action
 router.post('/login', auth.doLogin);
+
+router.get('/:id/edit', connectEnsureLogin.ensureLoggedIn(), auth.edit);
+
+router.post('/:id/edit', connectEnsureLogin.ensureLoggedIn(), auth.update);
 
 // route for logout action
 router.get('/logout', auth.logout);

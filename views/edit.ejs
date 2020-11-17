@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include partials/head %>
+</head>
+
+<body>
+  <% include partials/menu_authenticated %>
+
+
+  <div class="container-fluid bg-3 text-center">
+    <h3><%= title %></h3><br>
+    <div class="row">
+      <div class="col-sm-4">
+        <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">All Surveys</a>
+
+        <a href="/survey/index" id="sendMessageButton" class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Cancel</a>
+        
+
+        <br>
+      </div>
+      <div class="col-sm-8">
+        <form action="/<%= profile._id%>/edit" method="POST">
+          <input class="form-control form-group" type="text" placeholder="Your Current Email is: <%= profile.email%>" name="title" value="Your Current Email is: <%= profile.email%>" disabled />
+          <input class="form-control form-group" type="email" placeholder="New Email" name="email" value="<%= profile.email%>" required />
+          <button class="btn btn-primary btn-rounded btn-xl text-uppercase" type="submit">Update</button>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+</body>
+<% include partials/script %>
+
+</html>
